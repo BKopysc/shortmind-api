@@ -33,4 +33,7 @@ public class ShortNoteLike {
     @ManyToOne
     private ShortNote shortNote;
 
+    @ManyToOne
+    private User user;
+
 }

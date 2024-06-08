@@ -5,8 +5,9 @@ import java.util.Optional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.bkopysc.shortmind.dto.User.NewUserDTO;
+import com.bkopysc.shortmind.dto.User.UserSignDTO;
 import com.bkopysc.shortmind.dto.User.UserGetDTO;
+import com.bkopysc.shortmind.exceptions.ObjectExistedException;
 import com.bkopysc.shortmind.exceptions.ObjectNotFoundException;
 import com.bkopysc.shortmind.model.ERole;
 import com.bkopysc.shortmind.model.Role;
@@ -15,7 +16,7 @@ import com.bkopysc.shortmind.repository.RoleRepository;
 import com.bkopysc.shortmind.repository.UserRepository;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements IUserService{
     
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -28,10 +29,16 @@ public class UserServiceImpl implements UserService{
         this.roleRepository = roleRepository;
     }
 
-    public User addNewUser(NewUserDTO newUserDTO) {
+    public User addNewUser(UserSignDTO newUserDTO) {
         Optional<Role> role = roleRepository.findByName(ERole.USER);
         if(role.isEmpty()) {
             throw new ObjectNotFoundException("Role");
+        }
+
+        Optional<User> user = userRepository.getByUsername(newUserDTO.getUsername());
+
+        if(user.isPresent()) {
+            throw new ObjectExistedException("User");
         }
 
         User newUser = new User();

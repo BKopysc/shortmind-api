@@ -36,4 +36,7 @@ public class Comment {
 
     @ManyToOne
     private ShortNote shortNote;
+
+    @ManyToOne
+    private User user;
 }
