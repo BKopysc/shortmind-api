@@ -1,4 +1,4 @@
-package com.bkopysc.shortmind.dto.Auth;
+package com.bkopysc.shortmind.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

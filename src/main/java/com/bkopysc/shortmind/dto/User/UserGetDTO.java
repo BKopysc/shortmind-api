@@ -1,4 +1,4 @@
-package com.bkopysc.shortmind.dto.User;
+package com.bkopysc.shortmind.dto.user;
 
 import lombok.Data;
 

@@ -22,7 +22,7 @@ import com.bkopysc.shortmind.config.auth.JwtAuthenticationFilter;
 public class WebSecurityConfig {
 
 	private static final String[] WHITE_LIST = {
-		"/api/auth/**"
+		"/api/**",
 	};
 
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;

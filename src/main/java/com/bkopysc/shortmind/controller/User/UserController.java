@@ -1,20 +1,21 @@
-package com.bkopysc.shortmind.controller.User;
+package com.bkopysc.shortmind.controller.user;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bkopysc.shortmind.dto.User.UserGetDTO;
-import com.bkopysc.shortmind.dto.User.UserSignDTO;
-import com.bkopysc.shortmind.service.UserService.UserServiceImpl;
+import com.bkopysc.shortmind.dto.user.UserGetDTO;
+import com.bkopysc.shortmind.dto.user.UserSignDTO;
+import com.bkopysc.shortmind.service.user.IUserService;
+import com.bkopysc.shortmind.service.user.UserServiceImpl;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController implements IUserOperations{
 
-    private final UserServiceImpl userService;
+    private final IUserService userService;
 
-    public UserController(UserServiceImpl userService) {
+    public UserController(IUserService userService) {
         this.userService = userService;
     }
     @Override

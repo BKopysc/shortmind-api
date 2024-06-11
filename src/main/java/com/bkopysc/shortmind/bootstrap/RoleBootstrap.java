@@ -6,11 +6,13 @@ import java.util.Optional;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 
 import com.bkopysc.shortmind.model.ERole;
 import com.bkopysc.shortmind.model.Role;
 import com.bkopysc.shortmind.repository.RoleRepository;
 
+@Component
 public class RoleBootstrap implements ApplicationListener<ContextRefreshedEvent>{
 
     private final RoleRepository roleRepository;

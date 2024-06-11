@@ -1,6 +1,7 @@
 package com.bkopysc.shortmind.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,10 +18,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "short_notes")
 public class ShortNote {
     
@@ -42,8 +49,9 @@ public class ShortNote {
     @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
 
+    @Builder.Default
     @OneToMany(mappedBy = "shortNote", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Comment> comments;
+    private Set<Comment> comments = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -1,20 +1,21 @@
-package com.bkopysc.shortmind.controller.Auth;
+package com.bkopysc.shortmind.controller.auth;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bkopysc.shortmind.dto.Auth.AuthRequestDTO;
-import com.bkopysc.shortmind.dto.Auth.AuthResponseDTO;
-import com.bkopysc.shortmind.service.AuthService.AuthServiceImpl;
+import com.bkopysc.shortmind.dto.auth.AuthRequestDTO;
+import com.bkopysc.shortmind.dto.auth.AuthResponseDTO;
+import com.bkopysc.shortmind.service.auth.AuthServiceImpl;
+import com.bkopysc.shortmind.service.auth.IAuthService;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController implements IAuthOperations{
 
-    private final AuthServiceImpl authService;
+    private final IAuthService authService;
 
-    public AuthController(AuthServiceImpl authService) {
+    public AuthController(IAuthService authService) {
         this.authService = authService;
     }
 
