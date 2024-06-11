@@ -7,7 +7,7 @@ import com.bkopysc.shortmind.model.User;
 
 public interface IUserService {
 
-    public User addNewUser(UserSignDTO newUserDTO);
+    public UserGetDTO addNewUser(UserSignDTO newUserDTO);
 
     public UserGetDTO getByUsername(String username);
 }

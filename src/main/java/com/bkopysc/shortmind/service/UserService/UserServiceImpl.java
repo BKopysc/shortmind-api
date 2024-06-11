@@ -2,6 +2,7 @@ package com.bkopysc.shortmind.service.UserService;
 
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +22,17 @@ public class UserServiceImpl implements IUserService{
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final ModelMapper modelMapper;
 
     public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder,
-            RoleRepository roleRepository) {
+            RoleRepository roleRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
+        this.modelMapper = modelMapper;
     }
 
-    public User addNewUser(UserSignDTO newUserDTO) {
+    public UserGetDTO addNewUser(UserSignDTO newUserDTO) {
         Optional<Role> role = roleRepository.findByName(ERole.USER);
         if(role.isEmpty()) {
             throw new ObjectNotFoundException("Role");
@@ -45,8 +48,10 @@ public class UserServiceImpl implements IUserService{
         newUser.setUsername(newUserDTO.getUsername());
         newUser.setPassword(passwordEncoder.encode(newUserDTO.getPassword()));
         newUser.setRole(role.get());
+
+        User savedUser = userRepository.save(newUser);
         
-        return userRepository.save(newUser);
+        return this.modelMapper.map(savedUser, UserGetDTO.class);
     }
 
     public UserGetDTO getByUsername(String username) {

@@ -12,12 +12,9 @@ import com.bkopysc.shortmind.dto.User.UserSignDTO;
 @RequestMapping("/default")
 public interface IUserOperations {
 
-    @PostMapping("/signup")
-    public ResponseEntity<UserGetDTO> signup(@RequestBody UserSignDTO newUserDTO);
-
-    @PostMapping("/login")
-    public ResponseEntity<UserGetDTO> login(@RequestBody UserSignDTO userDTO);
-
     @GetMapping("/{id}")
-    public ResponseEntity<UserGetDTO> getUserById(Long id);
+    public ResponseEntity<UserGetDTO> getByUsername(String username);
+
+    @GetMapping("/")
+    public ResponseEntity<String> test();
 }
