@@ -15,6 +15,6 @@ public interface IUserOperations {
     @GetMapping("/{id}")
     public ResponseEntity<UserGetDTO> getByUsername(String username);
 
-    @GetMapping("/")
-    public ResponseEntity<String> test();
+    @GetMapping("/is-username-taken/{username}")
+    public ResponseEntity<Boolean> isUsernameTaken(String username);
 }

@@ -4,6 +4,7 @@ import com.bkopysc.shortmind.exceptions.ObjectExistedException;
 import com.bkopysc.shortmind.exceptions.ObjectNotFoundException;
 import com.bkopysc.shortmind.exceptions.WrongPasswordException;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -23,6 +24,7 @@ import com.bkopysc.shortmind.service.user.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Primary
 @RequiredArgsConstructor
 public class AuthServiceImpl implements IAuthService{
 

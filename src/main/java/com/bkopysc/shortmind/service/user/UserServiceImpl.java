@@ -19,8 +19,7 @@ public class UserServiceImpl implements IUserService{
     
     private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder,
-            RoleRepository roleRepository, ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -41,6 +40,11 @@ public class UserServiceImpl implements IUserService{
     public User getAuthenticatedUser(Authentication authentication) {
         String username = authentication.getName();
         return userRepository.getByUsername(username).orElseThrow(() -> new ObjectNotFoundException("User"));
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return userRepository.getByUsername(username).isPresent();
     }
 
     

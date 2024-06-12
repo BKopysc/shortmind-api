@@ -25,9 +25,10 @@ public class UserController implements IUserOperations{
     }
 
     @Override
-    public ResponseEntity<String> test() {
-        // TODO Auto-generated method stub
-        return ResponseEntity.ok("Test");
+    public ResponseEntity<Boolean> isUsernameTaken(String username) {
+        return ResponseEntity.ok(this.userService.existsByUsername(username));
     }
+
+
     
 }

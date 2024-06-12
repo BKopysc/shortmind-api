@@ -9,21 +9,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bkopysc.shortmind.dto.shortnote.ShortNoteGetDTO;
 import com.bkopysc.shortmind.dto.shortnote.ShortNotePostDTO;
 import com.bkopysc.shortmind.service.shortnote.IShortNoteService;
+import com.bkopysc.shortmind.service.shortnoteLike.IShortNoteLikeService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/shortnote")
+@RequiredArgsConstructor
+@RequestMapping("/api/shortnotes")
 public class ShortNoteController implements IShortNoteOperations{
 
     private final IShortNoteService shortNoteService;
+    private final IShortNoteLikeService shortNoteLikeService;
 
-    public ShortNoteController(IShortNoteService shortNoteService) {
-        this.shortNoteService = shortNoteService;
-    }
 
     @Override
     public ResponseEntity<ShortNoteGetDTO> getShortNoteById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getShortNoteById'");
+        return ResponseEntity.ok(this.shortNoteService.getShortNoteDTOById(id));
     }
 
     @Override
@@ -33,8 +34,18 @@ public class ShortNoteController implements IShortNoteOperations{
 
     @Override
     public ResponseEntity<ShortNoteGetDTO> createShortNote(ShortNotePostDTO shortNotePostDTO) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createShortNote'");
+        ShortNoteGetDTO shortNoteGetDTO = this.shortNoteService.createShortNote(shortNotePostDTO);
+        return ResponseEntity.ok(shortNoteGetDTO);
+    }
+
+    @Override
+    public ResponseEntity<Boolean> likeShortNote(Long id) {
+        return ResponseEntity.ok(this.shortNoteService.likeShortNoteById(id));
+    }
+
+    @Override
+    public ResponseEntity<Boolean> unlikeShortNote(Long id) {
+        return ResponseEntity.ok(this.shortNoteService.unlikeShortNoteById(id));
     }
     
 }

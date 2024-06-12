@@ -2,6 +2,7 @@ package com.bkopysc.shortmind.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,7 +23,8 @@ import com.bkopysc.shortmind.config.auth.JwtAuthenticationFilter;
 public class WebSecurityConfig {
 
 	private static final String[] WHITE_LIST = {
-		"/api/**",
+		"/api/auth/**",
+		"/api/users/**",
 	};
 
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -37,11 +39,10 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
 			.csrf(AbstractHttpConfigurer::disable)
-			.authorizeHttpRequests(req ->
-					req.requestMatchers(WHITE_LIST)
-							.permitAll()
-							.anyRequest()
-							.authenticated()
+			.authorizeHttpRequests(req -> req
+					.requestMatchers(WHITE_LIST).permitAll()
+					.requestMatchers(HttpMethod.GET, "/api/shortnotes/**").permitAll()
+					.anyRequest().authenticated()
 			)
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authenticationProvider(authenticationProvider)

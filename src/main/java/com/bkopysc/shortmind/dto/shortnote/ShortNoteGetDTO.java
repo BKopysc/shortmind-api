@@ -21,4 +21,7 @@ public class ShortNoteGetDTO {
     private Date createdAt;
     private UserGetDTO user;
 
+    @Builder.Default
+    private Long likes = 0L;
+
 }
