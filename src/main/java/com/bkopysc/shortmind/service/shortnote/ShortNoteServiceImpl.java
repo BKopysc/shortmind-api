@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.bkopysc.shortmind.dto.comment.CommentGetDTO;
 import com.bkopysc.shortmind.dto.shortnote.ShortNoteGetDTO;
 import com.bkopysc.shortmind.dto.shortnote.ShortNotePostDTO;
 import com.bkopysc.shortmind.dto.user.UserGetDTO;
@@ -116,5 +117,6 @@ public class ShortNoteServiceImpl implements IShortNoteService{
         ShortNote shortNote = this.shortNoteRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("ShortNote"));
         return this.shortNoteLikeService.unlike(shortNote);
     }
+
     
 }

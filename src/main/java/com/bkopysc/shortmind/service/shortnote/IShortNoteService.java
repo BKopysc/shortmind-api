@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
+import com.bkopysc.shortmind.dto.comment.CommentGetDTO;
 import com.bkopysc.shortmind.dto.shortnote.ShortNoteGetDTO;
 import com.bkopysc.shortmind.dto.shortnote.ShortNotePostDTO;
 import com.bkopysc.shortmind.model.ShortNote;
