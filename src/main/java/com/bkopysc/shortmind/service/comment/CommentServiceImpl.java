@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Primary
 @RequiredArgsConstructor
-public class CommentServiceImpl implements ICommentService{
+public class CommentServiceImpl implements ICommentService {
 
     private final CommentRepository commentRepository;
     private final IUserService userService;
@@ -50,14 +50,15 @@ public class CommentServiceImpl implements ICommentService{
                 .shortNoteId(commentPostDTO.getShortNoteId())
                 .user(this.modelMapper.map(user, UserGetDTO.class))
                 .build();
-                
+
         return commentGetDTO;
     }
 
     @Override
     public CommentGetDTO getCommentById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCommentById'");
+        Comment comment = this.commentRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Comment not found"));
+        return this.modelMapper.map(comment, CommentGetDTO.class);
     }
 
     @Override
@@ -68,8 +69,10 @@ public class CommentServiceImpl implements ICommentService{
 
     @Override
     public List<CommentGetDTO> getAllComments() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllComments'");
+        List<Comment> comments = this.commentRepository.findAll();
+        List<CommentGetDTO> commentGetDTOs = comments.stream()
+                .map(comment -> this.modelMapper.map(comment, CommentGetDTO.class)).toList();
+        return commentGetDTOs;
     }
-    
+
 }
