@@ -19,8 +19,4 @@ public interface IAuthOperations {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthResponseDTO> authenticate(@RequestBody AuthRequestDTO authRequestDTO);
 
-    @Secured("ROLE_USER")
-    @GetMapping("/test")
-    public ResponseEntity<String> test();
-
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.bkopysc.shortmind.exceptions.ErrorDetails;
 import com.bkopysc.shortmind.exceptions.ObjectExistedException;
 import com.bkopysc.shortmind.exceptions.ObjectNotFoundException;
+import com.bkopysc.shortmind.exceptions.UserNotOwnerException;
 import com.bkopysc.shortmind.exceptions.WrongPasswordException;
 
 @RestControllerAdvice
@@ -35,5 +36,13 @@ public class ExceptionControllerAdvice {
         errorDetails.setMessage(ex.getMessage());
         errorDetails.setStatus(HttpStatus.UNAUTHORIZED);
         return new ResponseEntity<>(errorDetails, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(UserNotOwnerException.class)
+    public ResponseEntity<ErrorDetails> handleUserNotOwnerException(UserNotOwnerException ex) {
+        ErrorDetails errorDetails = new ErrorDetails();
+        errorDetails.setMessage(ex.getMessage());
+        errorDetails.setStatus(HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(errorDetails, HttpStatus.FORBIDDEN);
     }
 }

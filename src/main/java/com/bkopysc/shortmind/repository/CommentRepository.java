@@ -10,13 +10,13 @@ import com.bkopysc.shortmind.model.Comment;
 
 public interface CommentRepository extends JpaRepository<Comment, Long>{
     
-    @Query("SELECT c FROM Comment c WHERE c.commentId = :commentId")
+    @Query("SELECT c FROM Comment c WHERE c.id = :commentId")
     public Optional<Comment> findByCommentId(Long commentId);
     
-    @Query("SELECT c FROM Comment c WHERE c.shortNote.shortNoteId = :shortNoteId")
+    @Query("SELECT c FROM Comment c WHERE c.shortNote.id = :shortNoteId")
     public List<Comment> getCommentsByShortNoteId(Long shortNoteId);
 
-    @Query("SELECT c FROM Comment c WHERE c.user.userId = :userId")
+    @Query("SELECT c FROM Comment c WHERE c.user.id = :userId")
     public List<Comment> getCommentsByUserId(Long userId);
 
 

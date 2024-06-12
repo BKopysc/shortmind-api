@@ -9,6 +9,7 @@ public interface ICommentService {
     
     public CommentGetDTO createComment(CommentPostDTO commentPostDTO);
     public CommentGetDTO getCommentById(Long id);
+    public List<CommentGetDTO> getCommentsByShortnoteId(Long shortNoteId);
     public Boolean deleteCommentById(Long id);
     public List<CommentGetDTO> getAllComments();
 

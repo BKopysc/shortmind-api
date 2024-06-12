@@ -29,11 +29,4 @@ public class AuthController implements IAuthOperations{
         return ResponseEntity.ok(this.authService.authenticate(authRequestDTO));
     }
 
-    @Override
-    public ResponseEntity<String> test() {
-        return ResponseEntity.ok("Test");
-    }
-
-    
-    
 }

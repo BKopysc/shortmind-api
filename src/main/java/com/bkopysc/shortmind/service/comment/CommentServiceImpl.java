@@ -12,6 +12,8 @@ import org.springframework.ui.ModelMap;
 import com.bkopysc.shortmind.dto.comment.CommentGetDTO;
 import com.bkopysc.shortmind.dto.comment.CommentPostDTO;
 import com.bkopysc.shortmind.dto.user.UserGetDTO;
+import com.bkopysc.shortmind.exceptions.ObjectNotFoundException;
+import com.bkopysc.shortmind.exceptions.UserNotOwnerException;
 import com.bkopysc.shortmind.model.Comment;
 import com.bkopysc.shortmind.model.User;
 import com.bkopysc.shortmind.repository.CommentRepository;
@@ -44,27 +46,42 @@ public class CommentServiceImpl implements ICommentService {
 
         Comment savedComment = this.commentRepository.save(newComment);
 
-        CommentGetDTO commentGetDTO = CommentGetDTO.builder()
-                .id(savedComment.getId())
-                .content(savedComment.getContent())
-                .shortNoteId(commentPostDTO.getShortNoteId())
-                .user(this.modelMapper.map(user, UserGetDTO.class))
-                .build();
+        CommentGetDTO commentGetDTO = this.modelMapper.map(savedComment, CommentGetDTO.class);
 
         return commentGetDTO;
     }
 
     @Override
+    public List<CommentGetDTO> getCommentsByShortnoteId(Long shortNoteId){
+        List<Comment> comments = this.commentRepository.getCommentsByShortNoteId(shortNoteId);
+
+        List<CommentGetDTO> commentGetDTOs = comments.stream()
+                .map(comment -> this.modelMapper.map(comment, CommentGetDTO.class)).toList();
+                
+        return commentGetDTOs;
+    }
+
+    @Override
     public CommentGetDTO getCommentById(Long id) {
         Comment comment = this.commentRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Comment not found"));
+                .orElseThrow(() -> new ObjectNotFoundException("Comment not found"));
         return this.modelMapper.map(comment, CommentGetDTO.class);
     }
 
     @Override
     public Boolean deleteCommentById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteCommentById'");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        var user = this.userService.getAuthenticatedUser(authentication);
+
+        Comment comment = this.commentRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Comment not found"));
+
+        if (comment.getUser().getId() != user.getId()) {
+            throw new UserNotOwnerException("Comment");
+        }
+
+        this.commentRepository.deleteById(id);
+        return true;
     }
 
     @Override

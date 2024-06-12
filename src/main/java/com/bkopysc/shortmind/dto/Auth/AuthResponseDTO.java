@@ -9,6 +9,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class AuthResponseDTO {
     
-    @JsonProperty("access_token")
     private String accessToken;
 }

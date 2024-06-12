@@ -2,6 +2,7 @@ package com.bkopysc.shortmind.controller.comment;
 
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,8 @@ public interface ICommentOperations {
     @PostMapping("/")
     public ResponseEntity<CommentGetDTO> createComment(@RequestBody CommentPostDTO commentPostDTO);
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteComment(@PathVariable Long id);
 
 
 }

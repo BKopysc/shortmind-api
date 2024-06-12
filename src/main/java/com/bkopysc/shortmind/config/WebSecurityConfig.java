@@ -41,6 +41,8 @@ public class WebSecurityConfig {
 			.csrf(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests(req -> req
 					.requestMatchers(WHITE_LIST).permitAll()
+					.requestMatchers(HttpMethod.GET, "/api/comments/**").permitAll()
+					.requestMatchers(HttpMethod.GET, "/api/shortnotes-likes/**").permitAll()
 					.requestMatchers(HttpMethod.GET, "/api/shortnotes/**").permitAll()
 					.anyRequest().authenticated()
 			)

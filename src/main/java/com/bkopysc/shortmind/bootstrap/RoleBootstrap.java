@@ -1,8 +1,9 @@
 package com.bkopysc.shortmind.bootstrap;
 
-import java.util.Arrays;
+
 import java.util.Map;
 import java.util.Optional;
+import java.util.Arrays;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
