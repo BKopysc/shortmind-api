@@ -13,5 +13,4 @@ public class CommentPostDTO {
     
     private String content;
     private Long shortNoteId;
-    private Long userId;
 }

@@ -19,5 +19,6 @@ public class CommentGetDTO {
     private String content;
     private Date createdAt;
     private UserGetDTO user;
+    private Long shortNoteId;
 
 }
