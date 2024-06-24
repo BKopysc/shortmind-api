@@ -25,11 +25,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class ControllerTestHelper {
 
-    @Autowired
-    private MockMvc mockMvc;
+    private final MockMvc mockMvc;
+    private final ObjectMapper objectMapper;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    public ControllerTestHelper(MockMvc mockMvc, ObjectMapper objectMapper) {
+        this.mockMvc = mockMvc;
+        this.objectMapper = objectMapper;
+    }
 
     public AuthResponseDTO createUser(AuthRequestDTO auth) throws Exception{
 
