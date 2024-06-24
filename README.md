@@ -3,8 +3,8 @@
 A simple text blog for short posts
 
 ## Features
-- User authentication
-- Posts (shortminds) creation
+- User authentication and authorization (JWT and Role-based)
+- Posts ("shortminds") creation
 - Comments on posts
 - Likes on posts
 
