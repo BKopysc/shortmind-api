@@ -19,8 +19,8 @@ public class UserController implements IUserOperations{
         this.userService = userService;
     }
     @Override
-    public ResponseEntity<UserGetDTO> getByUsername(String username) {
-        UserGetDTO user = this.userService.getByUsername(username);
+    public ResponseEntity<UserGetDTO> getById(Long id) {
+        UserGetDTO user = this.userService.getById(id);
         return ResponseEntity.ok(user);
     }
 

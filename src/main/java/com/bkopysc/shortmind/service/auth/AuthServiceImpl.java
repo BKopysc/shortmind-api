@@ -4,6 +4,7 @@ import com.bkopysc.shortmind.exceptions.ObjectExistedException;
 import com.bkopysc.shortmind.exceptions.ObjectNotFoundException;
 import com.bkopysc.shortmind.exceptions.WrongPasswordException;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.bkopysc.shortmind.config.auth.JwtService;
 import com.bkopysc.shortmind.dto.auth.AuthRequestDTO;
 import com.bkopysc.shortmind.dto.auth.AuthResponseDTO;
+import com.bkopysc.shortmind.dto.user.SimpleUserGetDTO;
 import com.bkopysc.shortmind.model.ERole;
 import com.bkopysc.shortmind.model.Role;
 import com.bkopysc.shortmind.model.User;
@@ -32,6 +34,7 @@ public class AuthServiceImpl implements IAuthService{
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final ModelMapper modelMapper;
     private final AuthenticationManager authenticationManager;
 
     @Override
@@ -51,7 +54,10 @@ public class AuthServiceImpl implements IAuthService{
         var savedUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(savedUser);
         
-        return new AuthResponseDTO(jwtToken);
+        return AuthResponseDTO.builder()
+            .accessToken(jwtToken)
+            .user(this.modelMapper.map(savedUser, SimpleUserGetDTO.class))
+            .build();
     }
 
     @Override
@@ -66,7 +72,10 @@ public class AuthServiceImpl implements IAuthService{
         }
         var jwtToken = jwtService.generateToken(user);
 
-        return new AuthResponseDTO(jwtToken);
+        return AuthResponseDTO.builder()
+            .accessToken(jwtToken)
+            .user(this.modelMapper.map(user, SimpleUserGetDTO.class))
+            .build();
     }
     
 }

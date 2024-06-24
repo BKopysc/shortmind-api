@@ -11,6 +11,8 @@ public interface IUserService {
 
     public UserGetDTO getByUsername(String username);
 
+    public UserGetDTO getById(Long id);
+
     public User getAuthenticatedUser(Authentication authentication);
 
     public boolean existsByUsername(String username);

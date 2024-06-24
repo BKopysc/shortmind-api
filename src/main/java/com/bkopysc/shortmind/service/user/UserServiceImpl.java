@@ -18,9 +18,11 @@ import com.bkopysc.shortmind.repository.UserRepository;
 public class UserServiceImpl implements IUserService{
     
     private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
+        this.modelMapper = new ModelMapper();
     }
 
     @Override
@@ -28,8 +30,7 @@ public class UserServiceImpl implements IUserService{
         Optional<User> user = userRepository.getByUsername(username);
         
         if(user.isPresent()) {
-            UserGetDTO userGetDTO = new UserGetDTO();
-            userGetDTO.setUsername(user.get().getUsername());
+            UserGetDTO userGetDTO = modelMapper.map(user.get(), UserGetDTO.class);
             return userGetDTO;
         } else {
             throw new ObjectNotFoundException("User");
@@ -45,6 +46,18 @@ public class UserServiceImpl implements IUserService{
     @Override
     public boolean existsByUsername(String username) {
         return userRepository.getByUsername(username).isPresent();
+    }
+
+    @Override
+    public UserGetDTO getById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        
+        if(user.isPresent()) {
+            UserGetDTO userGetDTO = modelMapper.map(user.get(), UserGetDTO.class);
+            return userGetDTO;
+        } else {
+            throw new ObjectNotFoundException("User");
+        }
     }
 
     
